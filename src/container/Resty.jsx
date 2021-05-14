@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import Controls from '../components/controls/Controls';
+import Display from '../components/display/Display';
+import { getJson } from '../service/jsonApi';
 export class Resty extends Component {
   state = {
     method: 'GET',
     url: '',
-    json: '',
+    body: '',
+    display: [],
   };
 
   handleMethodChange = ({ target }) => {
@@ -14,11 +17,20 @@ export class Resty extends Component {
     this.setState({ url: target.value });
   };
   handleJsonChange = ({ target }) => {
-    this.setState({ json: target.value });
+    this.setState({ body: target.value });
+  };
+
+  handleSubmitChange = async (e) => {
+    e.preventDefault();
+    const { url, method, body } = this.state;
+    const display = await getJson({url, method, body});
+    this.setState({
+      display
+    })
   };
 
   render() {
-    const { method, url, json } = this.state;
+    const { method, url, body, display } = this.state;
     return (
       <>
         <h1>Hello</h1>
@@ -28,9 +40,10 @@ export class Resty extends Component {
           onMethodChange={this.handleMethodChange}
           urlEntry={url}
           urlEntryChange={this.handleUrlChange}
-          jsonEntry={json}
+          jsonEntry={body}
           jsonEntryChange={this.handleJsonChange}
         />
+        <Display display={display}/>
       </>
     );
   }
