@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
+
+import Typography from '@material-ui/core/Typography';
+import Container from '@material-ui/core/Container';
+
 import Controls from '../components/controls/Controls';
 import Display from '../components/display/Display';
-import { getJson } from '../service/jsonApi';
+import HistoryList from '../components/historyList/HistoryList';
+import { fetchJson } from '../service/jsonApi';
 export class Resty extends Component {
   state = {
-    method: 'GET',
+    method: '',
     url: '',
     body: '',
-    display: [],
+    display: '',
+    history: [],
   };
 
   handleMethodChange = ({ target }) => {
@@ -23,17 +29,26 @@ export class Resty extends Component {
   handleSubmitChange = async (e) => {
     e.preventDefault();
     const { url, method, body } = this.state;
-    const display = await getJson({url, method, body});
-    this.setState({
-      display
-    })
+    const display = await fetchJson({ url, method, body });
+    this.setState((prevState) => ({
+      display,
+      history: [...prevState.history, { url, body, method }],
+    }));
   };
 
   render() {
-    const { method, url, body, display } = this.state;
+    const { method, url, body, display, history } = this.state;
     return (
-      <>
-        <h1>Hello</h1>
+      <Container maxWidth="xl">
+        <Typography
+          variant="h2"
+          color="textSecondary"
+          alignleft="true"
+          gutterBottom
+        >
+          RESTy
+        </Typography>
+
         <Controls
           handleSubmit={this.handleSubmitChange}
           methodEntry={method}
@@ -43,8 +58,17 @@ export class Resty extends Component {
           jsonEntry={body}
           jsonEntryChange={this.handleJsonChange}
         />
-        <Display display={display}/>
-      </>
+        <Container
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+          }}
+        >
+          <Display display={display} />
+
+          <HistoryList histories={history} method={method} url={url} />
+        </Container>
+      </Container>
     );
   }
 }

@@ -1,5 +1,7 @@
 {
     "cSpell.words": [
         "resty"
-    ]
+    ],
+    "editor.tabSize": 3,
+    "prettier.tabWidth": 1
 }

@@ -1,6 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import {
+  Container,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+} from '@material-ui/core';
 function Controls({
   handleSubmit,
   onMethodChange,
@@ -12,76 +21,95 @@ function Controls({
 }) {
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="GET-radio">
-        GET
-        <input
-          type="radio"
-          name="method"
-          id="GET-radio"
-          value="GET"
-          checked={methodEntry === 'GET'}
-          onChange={onMethodChange}
-        />
-      </label>
-
-      <label htmlFor="POST-radio">
-        POST
-        <input
-          type="radio"
-          name="method"
-          id="POST-radio"
-          value="POST"
-          checked={methodEntry === 'POST'}
-          onChange={onMethodChange}
-        />
-      </label>
-
-      <label htmlFor="PUT-radio">
-        PUT
-        <input
-          type="radio"
-          name="method"
-          id="PUT-radio"
-          value="PUT"
-          checked={methodEntry === 'PUT'}
-          onChange={onMethodChange}
-        />
-      </label>
-
-      <label htmlFor="PATCH-radio">
-        PATCH
-        <input
-          type="radio"
-          name="method"
-          id="PATCH-radio"
-          value="PATCH"
-          checked={methodEntry === 'PATCH'}
-          onChange={onMethodChange}
-        />
-      </label>
-
-      <label htmlFor="DELETE-radio">
-        DELETE
-        <input
-          type="radio"
-          name="method"
-          id="DELETE-radio"
-          value="DELETE"
-          checked={methodEntry === 'DELETE'}
-          onChange={onMethodChange}
-        />
-      </label>
-      <label htmlFor="url-input">
-        URL:
-        <input
+      <Container>
+        <TextField
+          label="Enter Url"
+          variant="outlined"
+          htmlFor="url-entry"
           type="text"
           id="url-input"
+          fullWidth
+          color="secondary"
           value={urlEntry}
           onChange={urlEntryChange}
         />
-      </label>
-      <button>GO</button>
-      <textarea value={jsonEntry} onChange={jsonEntryChange}></textarea>
+      </Container>
+      <Container>
+        <FormControl margin="normal" fullWidth>
+          <FormLabel>HTTP Requests</FormLabel>
+          <RadioGroup
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+            }}
+            fullWidth
+          >
+            <FormControlLabel
+              name="method"
+              id="GET-radio"
+              value="GET"
+              checked={methodEntry === 'GET'}
+              onChange={onMethodChange}
+              control={<Radio />}
+              label="GET"
+            />
+            <FormControlLabel
+              name="method"
+              id="POST-radio"
+              value="POST"
+              checked={methodEntry === 'POST'}
+              onChange={onMethodChange}
+              control={<Radio />}
+              label="POST"
+            />
+            <FormControlLabel
+              name="method"
+              id="PUT-radio"
+              value="PUT"
+              checked={methodEntry === 'PUT'}
+              onChange={onMethodChange}
+              control={<Radio />}
+              label="PUT"
+            />
+            <FormControlLabel
+              name="method"
+              id="PATCH-radio"
+              value="PATCH"
+              checked={methodEntry === 'PATCH'}
+              onChange={onMethodChange}
+              control={<Radio />}
+              label="PATCH"
+            />
+            <FormControlLabel
+              name="method"
+              id="DELETE-radio"
+              value="DELETE"
+              checked={methodEntry === 'DELETE'}
+              onChange={onMethodChange}
+              control={<Radio />}
+              label="DELETE"
+            />
+            <Button
+              type="submit"
+              color="default"
+              variant="outlined"
+              size="large"
+            >
+              Go
+            </Button>
+          </RadioGroup>
+        </FormControl>
+        <TextField
+          value={jsonEntry}
+          onChange={jsonEntryChange}
+          label="JSON"
+          multiline
+          size="large"
+          variant="outlined"
+          rows="5"
+          fullWidth
+        />
+      </Container>
     </form>
   );
 }
