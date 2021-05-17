@@ -35,14 +35,14 @@ function Controls({
         />
       </Container>
       <Container>
-        <FormControl margin="normal" fullWidth>
+        <FormControl margin="normal" >
           <FormLabel>HTTP Requests</FormLabel>
           <RadioGroup
             style={{
               display: 'flex',
               flexDirection: 'row',
             }}
-            fullWidth
+            
           >
             <FormControlLabel
               name="method"
@@ -89,12 +89,7 @@ function Controls({
               control={<Radio />}
               label="DELETE"
             />
-            <Button
-              type="submit"
-              color="default"
-              variant="outlined"
-              size="large"
-            >
+            <Button type="submit" color="default" variant="outlined">
               Go
             </Button>
           </RadioGroup>
@@ -104,7 +99,6 @@ function Controls({
           onChange={jsonEntryChange}
           label="JSON"
           multiline
-          size="large"
           variant="outlined"
           rows="5"
           fullWidth
